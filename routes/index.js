@@ -32,18 +32,28 @@ if (!connected)
       res.json( {'result':'connect fail'})
 
 
+// render -> login
 router.get('/', (req, res) => {
     res.sendfile('/public/index.html');
 });
 
+
+// API -> login
 router.post('/login', (req, res) => {
-        console.log(req.body.userId, req.body.userPw);
-    if(req.body.userId==='admin'&&req.body.userPw==='1234'){
-        res.json({success:true});
-    }else{
-        res.json({success:false});
+
+    var input_id = req.body['input_id'];
+    var input_pw = req.body['input_pw'];
+
+    console.log('input_id -> ', input_id);
+    console.log('input_pw -> ', input_pw);
+
+    if(input_id == 'admin' && input_pw == '1234') {
+        res.json({ 'result' : 'true' });
+    } else {
+        res.json({ 'result' : 'false' });
     }
 });
+
 
 router.get('/createAccount/',function(req,res,next) {
         const account = tronWeb.createAccount();
@@ -127,7 +137,7 @@ router.get('/sendToken',function(req,res,next) {
 			/*
                         console.log("gPK : ", gPK);
                         console.log("gvalue : ", gvalue);
-			console.log("gsendAddres :", gsendAddress); 
+			console.log("gsendAddres :", gsendAddress);
                         console.log("gtoAddress : ", gtoAddress);
 			*/
                         sendTransaction = await tronWeb.transactionBuilder.sendTrx(gtoAddress, gvalue, gsendAddress);
@@ -143,7 +153,7 @@ router.get('/sendToken',function(req,res,next) {
 
 			var params = [gsendAddress, gtoAddress, gvalue, txid];
         		connection.query(insert_sql, params, function (err, rows, fields) {
-        		if (!err) { 
+        		if (!err) {
 				console.log('query error : ' + err);
             			//res.send(err);
        			 }

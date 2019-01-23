@@ -1,38 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <title>Hello</title>
-    <script>
-        $(document).ready(function (){
-            $('#login').click(function () {
-                $.ajax({
-                    url: 'http://192.168.0.118:3000/login',
-                    method : 'POST',
-                    data: {userId : $('#id').val(), userPw: $('#pw').val()},
-                    dataType: 'json'
-                }).done(function(data){
-                    if(data.success)
-			document.getElementsById('result')[0].innerHTML = '로그인 성공';
-                    else
-			document.getElementsById('result').innerHTML = '로그인 로그인 실패';
-                }).fail(function (data){
-                    alert('로그인 오류');
-                })
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>Tron DAPP</title>
 </head>
-<body>
-    <h1>로그인페이지</h1>
-    <hr>
-    아이디 <input type="text" id='id'>
-    패스워드 <input type="password" id='pw'>
-    <button id="login">로그인</button>
-    result <input type="password" id='result'>
 
+<style>
+  .login-container {
+    border: solid 1px #cccccc;
+    border-radius: 8px;
+    width: 500px;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+  }
+  .login-title{
+    text-align: center;
+    font-size: 30px;
+  }
+  .btn-login{
+    width: 100%;
+  }
+</style>
+
+<body>
+  <div class='login-container'>
+    <div class='login-title'>로그인</div>
+
+    <div>
+      <div class="form-group">
+        <label for="input_id">아이디</label>
+        <input type="text" class="form-control" id="input_id" placeholder="아이디를 입력해주세요">
+      </div>
+    </div>
+
+    <div>
+      <div class="form-group">
+        <label for="input_pw">패스워드</label>
+        <input type="password" class="form-control" id="input_pw" placeholder="비밀번호를 입력해주세요">
+      </div>
+    </div>
+
+    <button onclick='click_login()' type="button" class="btn btn-success btn-login">로그인</button>
+  <div>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.0.1/dist/sweetalert2.all.min.js"></script>
+<script>
+function click_login(){
+
+  var input_id = $('#input_id').val();
+  var input_pw = $('#input_pw').val();
+
+  $.post( "/login", {
+     input_id: input_id,
+     input_pw: input_pw
+   })
+  .done(function( data ) {
+    if(data.result == 'true'){
+      Swal.fire({
+        type: 'success',
+        title: '개발중',
+        text: 'index 페이지 리다이렉트'
+      })
+    } else {
+      Swal.fire({
+        type: 'error',
+        title: '로그인 실패',
+        text: '아이디 또는 패스워드를 확인해주세요'
+      })
+    }
+  });
+}
+</script>
 </html>
