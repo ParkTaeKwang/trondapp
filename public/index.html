@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <title>Hello</title>
+    <script>
+        $(document).ready(function (){
+            $('#login').click(function () {
+                $.ajax({
+                    url: 'http://192.168.0.118:3000/login',
+                    method : 'POST',
+                    data: {userId : $('#id').val(), userPw: $('#pw').val()},
+                    dataType: 'json'
+                }).done(function(data){
+                    if(data.success)
+			document.getElementsById('result')[0].innerHTML = '로그인 성공';
+                    else
+			document.getElementsById('result').innerHTML = '로그인 로그인 실패';
+                }).fail(function (data){
+                    alert('로그인 오류');
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>로그인페이지</h1>
+    <hr>
+    아이디 <input type="text" id='id'>
+    패스워드 <input type="password" id='pw'>
+    <button id="login">로그인</button>
+    result <input type="password" id='result'>
+
+</body>
+</html>
