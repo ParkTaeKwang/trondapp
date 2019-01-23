@@ -7,10 +7,10 @@ test Demo 코드로 제작한것이고 실 운영시에는 꼭 https와 POST방�
 
 #### Reference
 
-https://github.com/tronprotocol/tron-web
-https://developers.tron.network/v3.0/reference#tronwebapi
-https://shasta.tronscan.org/#/
-https://medium.com/@kopi2642/25d38fced1a6
+https://github.com/tronprotocol/tron-web  
+https://developers.tron.network/v3.0/reference#tronwebapi  
+https://shasta.tronscan.org/#/  
+https://medium.com/@kopi2642/25d38fced1a6  
 
 #### history
 
@@ -157,20 +157,23 @@ yarn start
 
 ##### url guide
 
-계좌신청
-http://192.168.0.118:3000/createAccount/
+계좌신청  
 
-잔액조회 지갑주소
-http://192.168.0.118:3000/getBalance/지갑주소
+    http://192.168.0.118:3000/createAccount/
 
-송금
-http://192.168.0.118:3000/sendToken?PK=개인키&value=수량&toAddress=지갑주소
+잔액조회 지갑주소   
 
-PK, value, toAddress
+    http://192.168.0.118:3000/getBalance/지갑주소
 
-트렌잭션 조회
-http://192.168.0.118:3000/transactionview/지갑주소
+송금  
 
-조회된 트랜 젝션은 tronscan으로 조회 가능
-트랜젝션 조회는 현재 TronWeb API함수가 업데이트로 인해 동작을 하지 않아/
-송금한 txid를 DB에 넣고 조회하는 형식으로 구현
+    http://192.168.0.118:3000/sendToken?PK=개인키&value=수량&toAddress=지갑주소
+
+
+트렌잭션 조회  
+
+    http://192.168.0.118:3000/transactionview/지갑주소
+
+조회된 트랜 젝션은 tronscan으로 조회 가능  
+트랜젝션 조회는 현재 TronWeb API함수가 업데이트로 인해 동작을 하지 않아  
+송금한 txid를 DB에 넣고 조회하는 형식으로 구현  
