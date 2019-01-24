@@ -12,12 +12,12 @@
   .login-container {
     border: solid 1px #cccccc;
     border-radius: 8px;
-    width: 500px;
+    width: 600px;
     margin-top: 200px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 42px;
+    padding-right: 42px;
     padding-top: 30px;
     padding-bottom: 50px;
   }
@@ -32,7 +32,7 @@
 
 <body>
   <div class='login-container'>
-    <div class='login-title'>로그인</div>
+    <div class='login-title'>기능 선택</div>
 
     <div>
       <div class="form-group">
@@ -48,7 +48,35 @@
       </div>
     </div>
 
-    <button onclick='click_login()' type="button" class="btn btn-success btn-login">로그인</button>
+     <div>
+      <div class="form-group">
+        <label for="result">결과</label>
+	<textarea rows="10" class="form-control" id="result" placeholder="결과"></textarea>
+      </div>
+    </div>
+    <p><strong>작업</strong></p>
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+		<label class="btn btn-danger">
+                        <input type="radio" name="jb-radio" value="login"> 로그인
+                </label>
+		<label class="btn btn-danger">
+			<input type="radio" name="jb-radio" value="createAccount"> 계좌 신청 
+		</label>
+		<label class="btn btn-danger">
+			<input type="radio" name="jb-radio" value="getBalance"> 잔액조회
+		</label>
+		<label class="btn btn-danger">
+			<input type="radio" name="jb-radio" value="sendToken"> 송금
+		</label>
+		 <label class="btn btn-danger">
+                        <input type="radio" name="jb-radio" value="transactionview"> 트랜젝션 조회
+                </label>
+                <label class="btn btn-danger">
+                        <input type="radio" name="jb-radio" value="escrow"> Escrow
+                </label>
+	</div>
+	<br/><br/><br/>
+    <button onclick='click_exec()' type="button" class="btn btn-success btn-login">실행</button>
   <div>
 </body>
 
@@ -56,30 +84,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.0.1/dist/sweetalert2.all.min.js"></script>
 <script>
-function click_login(){
+function click_exec(){
 
   var input_id = $('#input_id').val();
   var input_pw = $('#input_pw').val();
+  var radioVal = $('input[name="jb-radio"]:checked').val();
+  //alert(radioVal);
+ if(radioVal=="login"){
+  	$.post( radioVal, {
+     		input_id: input_id,
+     		input_pw: input_pw
+   		})
+  	.done(function( data ) {
+    		if(data.result == 'true'){
+	     		document.getElementById("result").value ="success 개발중 index 페이지 리다이렉트";
+    		} else {
+	     	document.getElementById("result").value ="error 로그인 실패 아이디 또는 패스워드를 확인해주세요";
+    		}
+	})
 
-  $.post( "/login", {
-     input_id: input_id,
-     input_pw: input_pw
-   })
-  .done(function( data ) {
-    if(data.result == 'true'){
-      Swal.fire({
-        type: 'success',
-        title: '개발중',
-        text: 'index 페이지 리다이렉트'
-      })
-    } else {
-      Swal.fire({
-        type: 'error',
-        title: '로그인 실패',
-        text: '아이디 또는 패스워드를 확인해주세요'
-      })
-    }
-  });
+ } else if(radioVal=="createAccount"){
+	 //$.ajaxSetup({async:false});
+	 //alert(radioVal);
+	 $.post( radioVal, {
+                input_id: input_id,
+                input_pw: input_pw
+                })
+	 .done(function( data ) {
+                 	document.getElementById("result").value = data.result;
+	 })
+ } 
 }
 </script>
 </html>

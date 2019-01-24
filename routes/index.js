@@ -55,20 +55,20 @@ router.post('/login', (req, res) => {
 });
 
 
-router.get('/createAccount/',function(req,res,next) {
+router.post('/createAccount',function(req,res,next) {
         const account = tronWeb.createAccount();
         account.then(function (account) { const isValid = tronWeb.isAddress(account.address['hex']);
                 console.log('- Private Key:',   account.privateKey);
                 console.log('- Base58:',        account.address.base58);
                 console.log('- Valid: ',        isValid,        '\n');
                 account.isValid = isValid;
-                res.json( {'result':account.privateKey, '- Base58': account.address.base58});
+                res.json( {'result':account.privateKey  + "   - Base58:  " + account.address.base58});
         });
 });
 
 
 
-router.get('/getBalance/:Address',function(req,res,next) {
+router.post('/getBalance/:Address',function(req,res,next) {
         const app = async () => {
                 try {
                         const Add = req.params.Address;
@@ -85,7 +85,7 @@ router.get('/getBalance/:Address',function(req,res,next) {
 });
 
 
-router.get('/transactionview/:Address',function(req,res,next) {
+router.post('/transactionview/:Address',function(req,res,next) {
                 try{
                         var Address = req.params.Address;
                         var select_sql = "select *, \"send\" from transactionscan where from_address=? union all select *, \"receive\" from transactionscan where to_address=? order by idx desc;";
@@ -122,7 +122,7 @@ router.get('/transactionview/:Address',function(req,res,next) {
 });
 
 
-router.get('/sendToken',function(req,res,next) {
+router.post('/sendToken',function(req,res,next) {
         const app = async () => {
                 try {
                         const gPK = req.query.PK;
