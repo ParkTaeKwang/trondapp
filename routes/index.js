@@ -68,16 +68,16 @@ router.post('/createAccount',function(req,res,next) {
 
 
 
-router.post('/getBalance/:Address',function(req,res,next) {
+router.post('/getBalance',function(req,res,next) {
         const app = async () => {
                 try {
-                        const Add = req.params.Address;
+                        var Add = req.body['from_address'];
                         const gBalance = await tronWeb.trx.getBalance(Add);
                         const gBandwidth = await tronWeb.trx.getBandwidth(Add);
                         console.log("getBalance : ", gBalance);
                         console.log("getBandwidth : ", gBandwidth);
                         console.log("   ", Add);
-                        res.json( { "getBalance  ": gBalance, "getBandwidth": gBandwidth, "123": Add})
+			res.json( {'result': + "getBalance  "+ gBalance + "getBandwidth"+ gBandwidth + "From_Address"+ Add});
                 }catch (error) { console.log('Task Failure',error);
                 }
         };
