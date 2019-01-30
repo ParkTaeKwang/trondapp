@@ -92,14 +92,14 @@
 <script>
 function click_exec(){
 
-  var input_id = $('#input_id').val();
-  var input_pw = $('#input_pw').val();
+  var input_id = $('#from_address').val();
+  var input_pw = $('#to_address').val();
   var radioVal = $('input[name="jb-radio"]:checked').val();
-  //alert(radioVal);
+  //alert(input_id);
  if(radioVal=="login"){
   	$.post( radioVal, {
-     		input_id: from_address,
-     		input_pw: to_address 
+     		input_id,
+     		input_pw 
    		})
   	.done(function( data ) {
     		if(data.result == 'true'){
