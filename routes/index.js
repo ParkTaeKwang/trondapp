@@ -41,8 +41,8 @@ router.get('/', (req, res) => {
 // API -> login
 router.post('/login', (req, res) => {
 
-    var input_id = req.body['input_id'];
-    var input_pw = req.body['input_pw'];
+    var input_id = req.body['f_address'];
+    var input_pw = req.body['t_address'];
 
     console.log('input_id -> ', input_id);
     console.log('input_pw -> ', input_pw);

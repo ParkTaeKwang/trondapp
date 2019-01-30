@@ -92,14 +92,14 @@
 <script>
 function click_exec(){
 
-  var input_id = $('#from_address').val();
-  var input_pw = $('#to_address').val();
+  var f_address = $('#from_address').val();
+  var t_address = $('#to_address').val();
   var radioVal = $('input[name="jb-radio"]:checked').val();
-  //alert(input_id);
+  //alert(radioVal);
  if(radioVal=="login"){
   	$.post( radioVal, {
-     		input_id,
-     		input_pw 
+     		f_address,
+     		t_address 
    		})
   	.done(function( data ) {
     		if(data.result == 'true'){
@@ -113,8 +113,8 @@ function click_exec(){
 	 //$.ajaxSetup({async:false});
 	 //alert(radioVal);
 	 $.post( radioVal, {
-                input_id: input_id,
-                input_pw: input_pw
+                f_address,
+                t_address
                 })
 	 .done(function( data ) {
                  	document.getElementById("result").value = data.result;
