@@ -78,7 +78,7 @@ router.post('/getBalance',function(req,res,next) {
                         console.log("getBalance : ", ggBalance);
                         console.log("getBandwidth : ", gBandwidth);
                         console.log("   ", Add);
-			res.json( {'result': + ggBalance + "       getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
+			res.json( {'result': 'Balance' + ggBalance + "       getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
 		 }catch (error) { console.log('Task Failure',error);
                 }
         };
