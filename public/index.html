@@ -95,7 +95,7 @@ function click_exec(){
   var f_address = $('#from_address').val();
   var t_address = $('#to_address').val();
   var radioVal = $('input[name="jb-radio"]:checked').val();
-  //alert(radioVal);
+  alert(radioVal);
  if(radioVal=="login"){
   	$.post( radioVal, {
      		f_address,
@@ -113,17 +113,16 @@ function click_exec(){
 	 //$.ajaxSetup({async:false});
 	 //alert(radioVal);
 	 $.post( radioVal, {
-                f_address,
-                t_address
+                f_address
                 })
 	 .done(function( data ) {
                  	document.getElementById("result").value = data.result;
 	 })
 	} else if(radioVal=="getBalance"){
-         $.ajaxSetup({async:false});
+         //$.ajaxSetup({async:false});
          //alert(radioVal);
          $.post( radioVal, {
-                from_address: from_address 
+                f_address 
                 })
          .done(function( data ) {
                         document.getElementById("result").value = data.result;

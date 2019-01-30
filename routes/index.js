@@ -3,9 +3,9 @@ var router = express.Router();
 const TronWeb = require('tronweb');
 var mysql = require('mysql');
 
-const fullNode = 'https://api.shasta.trongrid.io';
-const solidityNode = 'https://api.shasta.trongrid.io';
-const eventServer = 'https://api.shasta.trongrid.io/';
+const fullNode = 'https://api.trongrid.io';
+const solidityNode = 'https://api.trongrid.io';
+const eventServer = 'https://api.trongrid.io/';
 var privateKey = '123';
 
 var connection = mysql.createConnection({
@@ -69,16 +69,17 @@ router.post('/createAccount',function(req,res,next) {
 
 
 router.post('/getBalance',function(req,res,next) {
-        const app = async () => {
+	const app = async () => {
                 try {
-                        var Add = req.body['from_address'];
-                        const gBalance = await tronWeb.trx.getBalance(Add);
-                        const gBandwidth = await tronWeb.trx.getBandwidth(Add);
-                        console.log("getBalance : ", gBalance);
+			var Add = req.body['f_address'];
+                        var gBalance = await tronWeb.trx.getBalance(Add)/1000000;
+			var ggBalance = gBalance.toFixed(1);
+                        var gBandwidth = await tronWeb.trx.getBandwidth(Add);
+                        console.log("getBalance : ", ggBalance);
                         console.log("getBandwidth : ", gBandwidth);
                         console.log("   ", Add);
-			res.json( {'result': + "getBalance  "+ gBalance + "getBandwidth"+ gBandwidth + "From_Address"+ Add});
-                }catch (error) { console.log('Task Failure',error);
+			res.json( {'result': + ggBalance + "       getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
+		 }catch (error) { console.log('Task Failure',error);
                 }
         };
         app();
