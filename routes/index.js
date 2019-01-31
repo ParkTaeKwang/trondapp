@@ -73,12 +73,13 @@ router.post('/getBalance',function(req,res,next) {
                 try {
 			var Add = req.body['f_address'];
                         var gBalance = await tronWeb.trx.getBalance(Add)/1000000;
-			var ggBalance = gBalance.toFixed(1);
+		 	var gAccount = await tronWeb.trx.getAccount(Add);
+                	var token = gAccount.assetV2[0].value/10;
                         var gBandwidth = await tronWeb.trx.getBandwidth(Add);
-                        console.log("getBalance : ", ggBalance);
+                        console.log("getBalance : ", gBalance);
                         console.log("getBandwidth : ", gBandwidth);
                         console.log("   ", Add);
-			res.json( {'result': 'Balance : ' + ggBalance + "       getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
+			res.json( {'result': 'TRX Balance : ' + gBalance + '   tokenBalance :    '+ token+ "      getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
 		 }catch (error) { console.log('Task Failure',error);
                 }
         };
