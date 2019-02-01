@@ -58,6 +58,7 @@
       <div class="form-group">
         <label for="result">결과</label>
 	<textarea rows="10" class="form-control" id="result" placeholder="결과"></textarea>
+	 <div id="result_2"></div>
       </div>
     </div>
     <p><strong>작업</strong></p>
@@ -108,8 +109,7 @@ function click_exec(){
 	     	document.getElementById("result").value ="error 로그인 실패 아이디 또는 패스워드를 확인해주세요";
     		}
 	})
-
- } else if(radioVal=="createAccount"){
+} else if(radioVal=="createAccount"){
 	 //$.ajaxSetup({async:false});
 	 //alert(radioVal);
 	 $.post( radioVal, {
@@ -118,7 +118,7 @@ function click_exec(){
 	 .done(function( data ) {
                  	document.getElementById("result").value = data.result;
 	 })
-	} else if(radioVal=="getBalance"){
+} else if(radioVal=="getBalance"){
          //$.ajaxSetup({async:false});
          //alert(radioVal);
          $.post( radioVal, {
@@ -127,7 +127,21 @@ function click_exec(){
          .done(function( data ) {
                         document.getElementById("result").value = data.result;
          })
- }
+} else if(radioVal=="transactionview"){
+         //$.ajaxSetup({async:false});
+         alert(radioVal);
+	 let html = ''
+         $.post( radioVal, {
+                f_address
+                })
+         .done(function( data ) {
+		$.each(data.result, function() {
+		//alert('block:'+this.block+', hash:'+this.hash);
+			html +='block : ' + this.block + ', hash: '+this.hash + 'timestamp : '+this.timestamp +' fromAddress:'+this.ownerAddress +' toAddress:'+this.toAddress +' assetname:'+this.assetname +  '<br/><br/>';
+		});
+	$('#result').html(html);
+	 })
+}
 }
 </script>
 </html>

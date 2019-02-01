@@ -1,3 +1,4 @@
+var request = require('request');
 var express = require('express');
 var router = express.Router();
 const TronWeb = require('tronweb');
@@ -79,7 +80,7 @@ router.post('/getBalance',function(req,res,next) {
                         console.log("getBalance : ", gBalance);
                         console.log("getBandwidth : ", gBandwidth);
                         console.log("   ", Add);
-			res.json( {'result': 'TRX Balance : ' + gBalance + '   tokenBalance :    '+ token+ "      getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
+			res.json( {'result': "TRX Balance :"  + gBalance + '   tokenBalance :    '+ token+ "      getBandwidth : "+ gBandwidth + "    From_Address   :   "+ Add});
 		 }catch (error) { console.log('Task Failure',error);
                 }
         };
@@ -87,40 +88,36 @@ router.post('/getBalance',function(req,res,next) {
 });
 
 
-router.post('/transactionview/:Address',function(req,res,next) {
-                try{
-                        var Address = req.params.Address;
-                        var select_sql = "select *, \"send\" from transactionscan where from_address=? union all select *, \"receive\" from transactionscan where to_address=? order by idx desc;";
-                        connection.query(select_sql, [Address, Address], function (err, rows, fields) {
-                        if (!err) {
-                                var resultdown = JSON.stringify(rows);
-				var TRList = JSON.parse(resultdown);
-				var Result_data = [];
-    				for(var i=0; i<TRList.length; i++){
-        				var TR=TRList[i];
+router.post('/transactionview',function(req,res,next) {
+	const app = async () => {
+                try {
+			var Address = req.body['f_address'];
+			request('https://apilist.tronscan.org/api/transaction?address='+ Address, function (error, response, body) {
+			if(!error && response.statusCode == 200) {
+				var TRList = JSON.parse(body);
+				var Result_TR = [];
+    				for(var i=0; i<TRList.data.length; i++){
+        				var TR=TRList.data[i];
           				var info = {
-						send: TR.send,
-						idx: TR.idx,
-						from_address: TR.from_address,
-						to_address: TR.to_address,
-                  				amount: TR.amount,
-                  				txid: "https://shasta.tronscan.org/#/transaction/"+ TR.txid
+						block : TR.block,
+						hash : TR.hash,
+						timestamp : TR.timestamp,
+						ownerAddress : TR.ownerAddress,
+						toAddress : TR.toAddress,
+						amount : TR.contractData.amount,
+						assetname : TR.contractData.asset_name
         				};
-        				Result_data.push(info);
+        				Result_TR.push(info);
     				}
-    				var result_end={
-        				count: Result_data.length, // count
-        				Result_data: Result_data
-    				};
-				console.log(result_end);
-                                res.send(result_end);
-                                } else {
-                                console.log('query error : ' + err);
-                                }
-                        });
-                }catch (error) { console.log('Task Failure',error);
+				console.log(Result_TR);
+				//var result = JSON.parse(Result_TR);
+				res.json( {'result': Result_TR});
+			}
+			});
+ }catch (error) { console.log('Task Failure',error);
                 }
-
+        };
+        app();
 });
 
 
