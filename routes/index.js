@@ -121,6 +121,24 @@ router.post('/transactionview',function(req,res,next) {
 });
 
 
+router.post('/escrow',function(req,res,next) {
+        const app = async () => {
+                try {
+		var pKey = req.body['f_address'];
+		//privateKey = tronWeb.setPrivateKey(pKey);
+		var t_Address = req.body['t_address'];
+		var t_value = req.body['token_value'];
+
+		console.log('- Private Key:',   pKey);
+                console.log('- to_Address:',    t_Address);
+                console.log('- t_value: ',      t_value,        '\n');
+
+ 		}catch (error) { console.log('Task Failure',error); }
+        };
+        app();
+});
+
+
 router.post('/sendToken',function(req,res,next) {
         const app = async () => {
                 try {

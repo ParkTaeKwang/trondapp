@@ -36,7 +36,7 @@
 
     <div>
       <div class="form-group">
-        <label for="input_id">보내는 사람 주소(잔액, 트랜젝션)</label>
+        <label for="input_id">보내는 사람 주소, 개인키(잔액, 트랜젝션, 에스크로)</label>
         <input type="text" class="form-control" id="from_address" placeholder="전지지갑 주소를 입력해주세요">
       </div>
     </div>
@@ -95,6 +95,7 @@ function click_exec(){
 
   var f_address = $('#from_address').val();
   var t_address = $('#to_address').val();
+  var token_value = $('#value').val();
   var radioVal = $('input[name="jb-radio"]:checked').val();
   alert(radioVal);
  if(radioVal=="login"){
@@ -141,6 +142,19 @@ function click_exec(){
 		});
 	$('#result').html(html);
 	 })
+
+	} else if(radioVal=="escrow"){
+         //$.ajaxSetup({async:false});
+         //alert(radioVal);
+         $.post( radioVal, {
+                f_address,
+		t_address,
+		token_value
+                })
+         .done(function( data ) {
+                        document.getElementById("result").value = data.result;
+         })
+
 }
 }
 </script>
